@@ -1,0 +1,178 @@
+{
+  "project_name": "FinanceTracker",
+  "design_philosophy": {
+    "theme": "Corporate Minimalist",
+    "archetype": "Archetype 4: Swiss & High-Contrast (Authority, Clarity, Truth) mixed with Archetype 1 (Trust)",
+    "core_values": ["Trust", "Clarity", "Efficiency", "Control"],
+    "visual_style": "Clean, dense data, high legibility, subtle depth"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Plus Jakarta Sans, sans-serif",
+      "body": "Manrope, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+      "h3": "text-2xl font-semibold tracking-tight",
+      "h4": "text-xl font-medium tracking-tight",
+      "body": "text-base font-normal leading-relaxed",
+      "small": "text-sm font-medium leading-normal",
+      "tiny": "text-xs font-medium tracking-wide uppercase"
+    },
+    "weights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "instructions": "Use Plus Jakarta Sans for all Headings (h1-h4). Use Manrope for all body text, labels, and especially numerical data (tables, charts, balances). Use JetBrains Mono for transaction IDs or API keys if visible."
+  },
+  "colors": {
+    "mode": "light",
+    "palette": {
+      "primary": {
+        "DEFAULT": "#0F172A",
+        "foreground": "#F8FAFC",
+        "hover": "#1E293B"
+      },
+      "secondary": {
+        "DEFAULT": "#10B981",
+        "foreground": "#FFFFFF",
+        "hover": "#059669"
+      },
+      "destructive": {
+        "DEFAULT": "#F43F5E",
+        "foreground": "#FFFFFF",
+        "hover": "#E11D48"
+      },
+      "background": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "muted": "#F1F5F9",
+      "border": "#E2E8F0",
+      "text": {
+        "primary": "#0F172A",
+        "secondary": "#64748B",
+        "tertiary": "#94A3B8"
+      },
+      "chart": {
+        "income": "#10B981",
+        "expense": "#F43F5E",
+        "investment": "#3B82F6",
+        "savings": "#F59E0B",
+        "neutral": "#94A3B8"
+      }
+    },
+    "gradients": {
+      "subtle": "bg-gradient-to-br from-white to-slate-50",
+      "primary_action": "bg-gradient-to-r from-slate-900 to-slate-800",
+      "glass": "bg-white/70 backdrop-blur-xl border-white/20"
+    },
+    "contrast_rules": "Text must meet APCA standards. Never use pure #000000. Use #0F172A (Dark Slate) instead."
+  },
+  "layout": {
+    "spacing_scale": "Tailwind default but prioritized: p-4, p-6, p-8, p-12, p-16",
+    "container": {
+      "max_width": "max-w-7xl",
+      "padding": "px-4 md:px-8"
+    },
+    "grid_system": {
+      "dashboard": "Bento Grid Mode B: grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 or gap-6",
+      "marketing": "The Tetris Grid: grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-8"
+    },
+    "z_index": {
+      "toast": 50,
+      "modal": 40,
+      "dropdown": 30,
+      "sticky_nav": 20,
+      "content": 1
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm px-6 py-2.5 rounded-lg font-medium transition-all active:scale-95",
+      "secondary": "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 shadow-sm px-6 py-2.5 rounded-lg font-medium transition-all",
+      "ghost": "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 px-4 py-2 rounded-lg transition-colors",
+      "destructive": "bg-destructive text-white hover:bg-destructive/90 shadow-sm px-6 py-2.5 rounded-lg transition-all"
+    },
+    "cards": {
+      "dashboard": "bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 p-6",
+      "highlight": "bg-slate-900 text-white rounded-xl shadow-lg p-6 relative overflow-hidden"
+    },
+    "inputs": {
+      "default": "bg-white border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg px-4 py-2.5 text-sm transition-all"
+    },
+    "navigation": {
+      "desktop_sidebar": "fixed left-0 top-0 h-full w-64 bg-slate-900 text-slate-300 p-6 flex flex-col border-r border-slate-800",
+      "mobile_bottom": "fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg border-t border-slate-200 p-3 flex justify-around items-center z-50",
+      "top_header": "sticky top-0 z-20 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-3 flex items-center justify-between"
+    },
+    "charts": {
+      "library": "recharts",
+      "style": "clean, minimal grid lines, custom tooltips with glassmorphism"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "soft": "shadow-[0_2px_8px_rgba(15,23,42,0.05)]",
+      "medium": "shadow-[0_4px_16px_rgba(15,23,42,0.08)]",
+      "floating": "shadow-[0_12px_32px_rgba(15,23,42,0.12)]"
+    },
+    "radius": {
+      "default": "rounded-lg",
+      "large": "rounded-xl",
+      "pill": "rounded-full"
+    },
+    "glassmorphism": "bg-white/70 backdrop-blur-xl border border-white/40 shadow-sm"
+  },
+  "motion": {
+    "transitions": "transition-all duration-200 ease-in-out",
+    "hover_lift": "hover:-translate-y-0.5 transition-transform duration-200",
+    "page_transition": "initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}",
+    "list_stagger": "staggerChildren: 0.05"
+  },
+  "assets": {
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-width={1.5} size={20}"
+    },
+    "images": {
+      "login_bg": "https://images.unsplash.com/photo-1721995432582-b0a486848fca?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBvZmZpY2UlMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwwfHx8fDE3NzQxNTE0MTd8MA&ixlib=rb-4.1.0&q=85",
+      "dashboard_hero": "https://images.unsplash.com/photo-1583338850703-bc602b103674?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwwfHx8fDE3NzQxNTE0MTd8MA&ixlib=rb-4.1.0&q=85",
+      "landing_trust": "https://images.unsplash.com/photo-1758519290884-39c72d6f5ddf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwyfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMGhhcHB5JTIwdGFibGV0fGVufDB8fHx8MTc3NDE1MTQxOHww&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install 'lucide-react' for icons if not present.",
+    "Install 'recharts' for data visualization.",
+    "Install 'sonner' for toast notifications.",
+    "Install 'framer-motion' for animations.",
+    "Configure Tailwind with the specified colors and fonts.",
+    "Use 'Plus Jakarta Sans' for headings and 'Manrope' for body text.",
+    "Implement the 'Bento Grid' layout for the dashboard.",
+    "Ensure all interactive elements have hover and focus states.",
+    "Use 'data-testid' for all key elements.",
+    "Prioritize PWA features: responsive design, touch targets, and offline readiness.",
+    "For the Landing Page, use the 'Tetris Grid' layout.",
+    "For Forms, use Shadcn UI components but customize the styling to match the corporate theme."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts. Create depth through layered design elements.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: 'transition: all'.",
+    "You MUST NOT center align the app container.",
+    "Always use modern button styles.",
+    "NEVER use AI assistant Emoji characters.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Components MUST use named exports.",
+    "Pages MUST use default exports.",
+    "Use 'sonner' for toasts."
+  ]
+}

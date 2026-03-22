@@ -1,0 +1,26 @@
+{
+  "short_name": "FinanceTracker",
+  "name": "FinanceTracker - Personal Finance Management",
+  "description": "Track your finances across multiple accounts with powerful reporting and insights",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135706.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135706.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0F172A",
+  "background_color": "#F8FAFC",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["finance", "productivity", "utilities"]
+}

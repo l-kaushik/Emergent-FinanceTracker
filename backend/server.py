@@ -420,6 +420,8 @@ async def get_dashboard_summary(current_user: User = Depends(get_current_user)):
     for tx in transactions:
         if isinstance(tx.get('date'), str):
             tx['date'] = datetime.fromisoformat(tx['date'])
+            if tx['date'].tzinfo is None:
+                tx['date'] = tx['date'].replace(tzinfo=timezone.utc)
     
     month_transactions = [tx for tx in transactions if tx['date'] >= start_of_month]
     
@@ -514,6 +516,8 @@ async def generate_report(report_req: ReportRequest, current_user: User = Depend
     for tx in transactions:
         if isinstance(tx.get('date'), str):
             tx['date'] = datetime.fromisoformat(tx['date'])
+            if tx['date'].tzinfo is None:
+                tx['date'] = tx['date'].replace(tzinfo=timezone.utc)
     
     month_transactions = [tx for tx in transactions if start_date <= tx['date'] < end_date]
     

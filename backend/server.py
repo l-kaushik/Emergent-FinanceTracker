@@ -365,11 +365,11 @@ async def execute_recurring_transactions(current_user: User = Depends(get_curren
     executed_count = 0
     for rt in recurring_txs:
         if isinstance(rt.get('start_date'), str):
-            rt['start_date'] = datetime.fromisoformat(rt['start_date'])
+            rt['start_date'] = datetime.fromisoformat(rt['start_date']).replace(tzinfo=timezone.utc)
         if rt.get('end_date') and isinstance(rt['end_date'], str):
-            rt['end_date'] = datetime.fromisoformat(rt['end_date'])
+            rt['end_date'] = datetime.fromisoformat(rt['end_date']).replace(tzinfo=timezone.utc)
         if rt.get('last_executed') and isinstance(rt['last_executed'], str):
-            rt['last_executed'] = datetime.fromisoformat(rt['last_executed'])
+            rt['last_executed'] = datetime.fromisoformat(rt['last_executed']).replace(tzinfo=timezone.utc)
         
         if rt.get('end_date') and now > rt['end_date']:
             continue

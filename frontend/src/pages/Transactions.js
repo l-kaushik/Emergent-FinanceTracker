@@ -16,7 +16,7 @@ export default function Transactions() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [filterAccount, setFilterAccount] = useState('');
+  const [filterAccount, setFilterAccount] = useState('all');
   const [formData, setFormData] = useState({
     account_id: '',
     type: 'expense',
@@ -46,7 +46,7 @@ export default function Transactions() {
   const fetchTransactions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const url = filterAccount ? `${API}/transactions?account_id=${filterAccount}` : `${API}/transactions`;
+      const url = (filterAccount && filterAccount !== 'all') ? `${API}/transactions?account_id=${filterAccount}` : `${API}/transactions`;
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -60,6 +60,12 @@ export default function Transactions() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.account_id) {
+      toast.error('Please select an account');
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       await axios.post(`${API}/transactions`, formData, {
@@ -108,13 +114,13 @@ export default function Transactions() {
           <p className="text-slate-600 mt-1">Track your income and expenses</p>
         </div>
         <div className="flex gap-3">
-          <Select value={filterAccount} onValueChange={setFilterAccount}>
+          <Select value={filterAccount || 'all'} onValueChange={(value) => setFilterAccount(value === 'all' ? '' : value)}>
             <SelectTrigger className="w-48" data-testid="filter-account-select">
               <Filter className="w-4 h-4 mr-2" />
               <SelectValue placeholder="All Accounts" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Accounts</SelectItem>
+              <SelectItem value="all">All Accounts</SelectItem>
               {accounts.map(acc => (
                 <SelectItem key={acc.id} value={acc.id}>{acc.name}</SelectItem>
               ))}
@@ -139,9 +145,13 @@ export default function Transactions() {
                       <SelectValue placeholder="Select account" />
                     </SelectTrigger>
                     <SelectContent>
-                      {accounts.map(acc => (
-                        <SelectItem key={acc.id} value={acc.id}>{acc.name}</SelectItem>
-                      ))}
+                      {accounts.length > 0 ? (
+                        accounts.map(acc => (
+                          <SelectItem key={acc.id} value={acc.id}>{acc.name}</SelectItem>
+                        ))
+                      ) : (
+                        <div className="p-2 text-sm text-slate-500">No accounts available</div>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>

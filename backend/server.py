@@ -454,23 +454,23 @@ async def get_dashboard_summary(current_user: User = Depends(get_current_user)):
 
 # ============ REPORT ENDPOINTS ============
 
-def generate_report_html(user: User, month: int, year: int, data: dict) -> str:
-    return f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <style>
-            body {{ font-family: Arial, sans-serif; margin: 40px; }}
-            h1 {{ color: #0F172A; }}
-            table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
-            th, td {{ border: 1px solid #E2E8F0; padding: 12px; text-align: left; }}
-            th {{ background-color: #0F172A; color: white; }}
-            .summary {{ background-color: #F8FAFC; padding: 20px; margin: 20px 0; }}
-            .income {{ color: #10B981; font-weight: bold; }}
-            .expense {{ color: #F43F5E; font-weight: bold; }}
-        </style>
-    </head>
-    <body>
+def generate_report_html(user: User, month: int, year: int, data: dict, for_pdf: bool = False) -> str:
+    """Generate report HTML. If for_pdf=True, includes full HTML structure for PDF generation."""
+    
+    styles = """
+        .report-container { font-family: Arial, sans-serif; }
+        .report-container h1 { color: #0F172A; margin-bottom: 8px; }
+        .report-container table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .report-container th, .report-container td { border: 1px solid #E2E8F0; padding: 12px; text-align: left; }
+        .report-container th { background-color: #0F172A; color: white; }
+        .report-container .summary { background-color: #F8FAFC; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .report-container .income { color: #10B981; font-weight: bold; }
+        .report-container .expense { color: #F43F5E; font-weight: bold; }
+        .report-container p { margin: 8px 0; }
+    """
+    
+    body_content = f"""
+    <div class="report-container">
         <h1>Financial Report - {year}/{month:02d}</h1>
         <p>Generated for: {user.name} ({user.email})</p>
         
@@ -499,9 +499,25 @@ def generate_report_html(user: User, month: int, year: int, data: dict) -> str:
                 <td class="{tx['type']}">${tx['amount']:.2f}</td>
             </tr>''' for tx in data['transactions'])}
         </table>
-    </body>
-    </html>
+    </div>
     """
+    
+    if for_pdf:
+        # Full HTML document for PDF generation
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>{styles}</style>
+        </head>
+        <body>
+            {body_content}
+        </body>
+        </html>
+        """
+    else:
+        # Just style + content for in-app rendering
+        return f"<style>{styles}</style>{body_content}"
 
 @api_router.post("/reports/generate")
 async def generate_report(report_req: ReportRequest, current_user: User = Depends(get_current_user)):
@@ -535,10 +551,9 @@ async def generate_report(report_req: ReportRequest, current_user: User = Depend
         "transactions": month_transactions
     }
     
-    html_content = generate_report_html(current_user, report_req.month, report_req.year, report_data)
-    
     if report_req.delivery_method == "pdf":
-        pdf_bytes = HTML(string=html_content).write_pdf()
+        html_for_pdf = generate_report_html(current_user, report_req.month, report_req.year, report_data, for_pdf=True)
+        pdf_bytes = HTML(string=html_for_pdf).write_pdf()
         pdf_base64 = base64.b64encode(pdf_bytes).decode('utf-8')
         return {"pdf_data": pdf_base64, "message": "PDF report generated"}
     
@@ -546,11 +561,12 @@ async def generate_report(report_req: ReportRequest, current_user: User = Depend
         if not resend.api_key:
             raise HTTPException(status_code=500, detail="Email service not configured")
         
+        html_for_email = generate_report_html(current_user, report_req.month, report_req.year, report_data, for_pdf=True)
         params = {
             "from": SENDER_EMAIL,
             "to": [current_user.email],
             "subject": f"Financial Report - {report_req.year}/{report_req.month:02d}",
-            "html": html_content
+            "html": html_for_email
         }
         
         try:
@@ -560,6 +576,7 @@ async def generate_report(report_req: ReportRequest, current_user: User = Depend
             raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
     
     else:  # in-app
+        html_content = generate_report_html(current_user, report_req.month, report_req.year, report_data, for_pdf=False)
         return {"html_content": html_content, "data": report_data, "message": "Report generated"}
 
 app.include_router(api_router)

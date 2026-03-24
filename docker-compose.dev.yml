@@ -1,0 +1,62 @@
+version: '3.8'
+
+# Development docker-compose with hot reload
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: finance-tracker-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=finance_tracker
+    networks:
+      - finance-tracker-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: finance-tracker-backend-dev
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend:/app:delegated
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - DB_NAME=finance_tracker
+      - CORS_ORIGINS=*
+      - JWT_SECRET_KEY=dev-secret-key
+    depends_on:
+      - mongodb
+    networks:
+      - finance-tracker-network
+    command: uvicorn server:app --host 0.0.0.0 --port 8001 --reload
+
+  frontend:
+    image: node:18-alpine
+    container_name: finance-tracker-frontend-dev
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app:delegated
+      - /app/node_modules
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8001
+      - WDS_SOCKET_PORT=0
+    networks:
+      - finance-tracker-network
+    command: sh -c "yarn install && yarn start"
+
+networks:
+  finance-tracker-network:
+    driver: bridge
+
+volumes:
+  mongodb_dev_data:
+    driver: local

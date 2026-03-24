@@ -1,0 +1,72 @@
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Build outputs
+frontend/build/
+frontend/dist/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Git
+.git/
+.gitignore
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+test_reports/
+
+# Documentation
+README.md
+docs/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Environment files (will be set via docker-compose)
+.env
+.env.*
+
+# Design files
+design_guidelines.json
+
+# Misc
+*.md
+!requirements.txt

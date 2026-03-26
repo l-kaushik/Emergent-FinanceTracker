@@ -47,11 +47,10 @@ services:
       - ./frontend:/app:delegated
       - /app/node_modules
     environment:
-      - REACT_APP_BACKEND_URL=http://localhost:8001
-      - WDS_SOCKET_PORT=0
+      - VITE_BACKEND_URL=http://localhost:8001
     networks:
       - finance-tracker-network
-    command: sh -c "yarn install && yarn start"
+    command: sh -c "yarn install && yarn dev --host"
 
 networks:
   finance-tracker-network:

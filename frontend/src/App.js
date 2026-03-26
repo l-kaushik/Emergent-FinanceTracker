@@ -11,7 +11,7 @@ import Reports from './pages/Reports';
 import Layout from './components/Layout';
 import '@/App.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 
 function App() {

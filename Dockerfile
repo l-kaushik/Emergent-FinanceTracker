@@ -13,7 +13,7 @@ RUN yarn install --frozen-lockfile
 # Copy frontend source
 COPY frontend/ ./
 
-# Build frontend for production
+# Build frontend for production with Vite
 RUN yarn build
 
 # Stage 2: Backend with Frontend Static Files

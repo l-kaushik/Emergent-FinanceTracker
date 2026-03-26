@@ -14,6 +14,13 @@ export default defineConfig({
     port: 3000,
     host: true,
     strictPort: true,
+    allowedHosts: [
+      'expense-sync-pro.cluster-3.preview.emergentcf.cloud',
+      'expense-sync-pro.preview.emergentagent.com',
+      '.emergentagent.com',
+      '.emergentcf.cloud',
+      'localhost',
+    ],
     hmr: {
       clientPort: 443,
       protocol: 'wss',

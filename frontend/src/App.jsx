@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Accounts from './pages/Accounts';
-import Transactions from './pages/Transactions';
-import RecurringTransactions from './pages/RecurringTransactions';
-import Reports from './pages/Reports';
-import Layout from './components/Layout';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Accounts from './pages/Accounts.jsx';
+import Transactions from './pages/Transactions.jsx';
+import RecurringTransactions from './pages/RecurringTransactions.jsx';
+import Reports from './pages/Reports.jsx';
+import Layout from './components/Layout.jsx';
 import '@/App.css';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;

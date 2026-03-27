@@ -2,19 +2,22 @@
 # Stage 1: Build Frontend
 FROM node:18-alpine AS frontend-builder
 
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+
 WORKDIR /frontend
 
 # Copy frontend package files
-COPY frontend/package.json frontend/yarn.lock ./
+COPY frontend/package*.json ./
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN npm install
 
 # Copy frontend source
 COPY frontend/ ./
 
 # Build frontend for production with Vite
-RUN yarn build
+RUN npm run build
 
 # Stage 2: Backend with Frontend Static Files
 FROM python:3.11-slim
@@ -25,6 +28,12 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
+    libglib2.0-0 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libcairo2 \
+    libgdk-pixbuf-2.0-0 \
+    shared-mime-info \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy backend requirements

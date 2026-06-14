@@ -30,14 +30,14 @@ db = client[os.environ['DB_NAME']]
 
 # Security
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'your-secret-key-change-in-production-123456789')
+SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 security = HTTPBearer()
 
 # Resend Email Setup
-resend.api_key = os.environ.get('RESEND_API_KEY', '')
-SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+resend.api_key = os.environ.get('RESEND_API_KEY')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL')
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
